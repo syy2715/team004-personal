@@ -19,4 +19,14 @@ class Review extends Model
         'spare3',
         'spare4',
     ];
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

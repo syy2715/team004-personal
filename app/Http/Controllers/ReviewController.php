@@ -9,36 +9,33 @@ use App\Models\Item;
 
 class ReviewController extends Controller
 {
-    public function index()
+    public function index(Item $item)
     {
-        $reviews = Review::all();
-        $items = Item::all();
-        return view('reviews.index', compact('reviews', 'items'));
-    }
+        $reviews = $item->reviews()
+            ->latest()
+            ->get();
 
-    public function create()
-    {
-        $items = Item::all();
-        return view('reviews.create', compact('items'));
+        return view('reviews.index', compact('item', 'reviews'));
     }
-
-    public function store(Request $request)
+    
+    public function store(Request $request, Item $item)
     {
-        $validatedData = $request->validate([
-            'item_id' => 'required|exists:items,id',
+        $request->validate([
             'rating' => 'required|integer|min:1|max:5',
-            'review' => 'required|string',
+            'review' => 'nullable|string',
         ]);
 
-        Review::create([
-            'item_id' => $validatedData['item_id'],
-            'rating'  => $validatedData['rating'],
-            'review'  => $validatedData['review'],
-            'user_id' => auth()->id(),
+        $item->reviews()->create([
+            'user_id' => 1, // 仮のユーザーID
+            'rating' => $request->rating,
+            'review' => $request->review,
         ]);
 
-        return redirect()->route('reviews.index');
+        return redirect()
+            ->route('items.reviews.index', $item->id)
+            ->with('success', 'レビューを投稿しました');
     }
+
 
     public function show(Review $review)
     {

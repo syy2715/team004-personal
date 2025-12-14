@@ -24,4 +24,9 @@ class Item extends Model
         'spare3',
         'spare4',
     ];
+
+        public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
