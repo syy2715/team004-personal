@@ -46,3 +46,8 @@ Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('review
 
 //　出退勤関連
 Route::get('/work-times', [WorkTimeController::class, 'index']);
+Route::get('/work-times', [WorkTimeController::class, 'index'])->name('work.index');
+Route::post('/work-times/start', [WorkTimeController::class, 'start'])->name('work.start');
+Route::post('/work-times/end', [WorkTimeController::class, 'end'])->name('work.end');
+Route::post('/work-times/rest-on', [WorkTimeController::class, 'restOn'])->name('work.rest_on');
+Route::post('/work-times/rest-back', [WorkTimeController::class, 'restBack'])->name('work.rest_back');
