@@ -76,4 +76,42 @@ class EmployeeController extends Controller
         return redirect()->route('employees.index')
                         ->with('success', '削除しました');
     }
+
+/**
+ * 社員登録画面表示
+ */
+public function create()
+{
+    return view('employees.create');
 }
+
+/**
+ * 社員登録処理
+ */
+public function store(Request $request)
+{
+    // 入力チェック
+    $request->validate([
+        'name' => 'required',
+        'group' => 'required',
+        'email' => 'required|email|unique:employees',
+        'phone' => 'nullable',
+        'password' => 'required|min:6',
+    ]);
+
+    // 登録
+    Employee::create([
+        'name' => $request->name,
+        'group' => $request->group,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'password' => bcrypt($request->password),
+    ]);
+
+    return redirect()->route('employees.index')
+                     ->with('success', '社員を登録しました');
+}
+
+}
+
+

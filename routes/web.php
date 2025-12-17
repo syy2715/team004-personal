@@ -26,6 +26,12 @@ Route::get('/', function () {
 });
 
 
+Route::get('/employees/create', [EmployeeController::class, 'create'])
+    ->name('employees.create');
+
+Route::post('/employees', [EmployeeController::class, 'store'])
+    ->name('employees.store');
+
 Route::get('/item', [App\Http\Controllers\ItemController::class, 'create']);
 Route::post('/item',[App\Http\Controllers\ItemController::class, 'store']);
 
@@ -43,3 +49,7 @@ Route::get('/items/{item}/reviews', [ReviewController::class, 'index'])->name('i
 Route::post('/items/{item}/reviews', [ReviewController::class, 'store'])->name('items.reviews.store');
 Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
