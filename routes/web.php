@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AttendanceController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,7 +26,6 @@ use App\Http\Controllers\AttendanceController;
 Route::get('/', function () {
     return view('welcome');
 });
-
 
 Route::get('/item', [App\Http\Controllers\ItemController::class, 'create']);
 Route::post('/item', [App\Http\Controllers\ItemController::class, 'store']);
@@ -58,3 +58,8 @@ Route::put('/attendances/{attendance}', [AttendanceController::class, 'update'])
 
 // 出退勤一覧関連
 Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
+
+// ルートの一覧を表示するページ（開発が終わったら消します）
+use App\Http\Controllers\RouteListController;
+
+Route::get('/route-list', [RouteListController::class, 'index'])->name('route.list');
