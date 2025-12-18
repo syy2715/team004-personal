@@ -16,6 +16,15 @@ class AttendanceController extends Controller
         return 1; // employees.id
     }
 
+    public function index()
+    {
+        $attendances = Attendance::where('employee_id', $this->tempEmployeeId())
+            ->orderBy('work_date', 'desc')
+            ->get();
+
+        return view('attendances.index', compact('attendances'));
+    }
+
     public function create()
     {
         $employee = Employee::find($this->tempEmployeeId());
@@ -93,5 +102,17 @@ class AttendanceController extends Controller
         );
 
         return back()->with('success', '退勤を登録しました');
+    }
+
+    public function edit(Attendance $attendance)
+    {
+        return view('attendances.edit', compact('attendance'));
+    }
+
+    public function update(Attendance $attendance, Request $request)
+    {
+        $attendance->update($request->all());
+
+        return back()->with('success', '出退勤を更新しました');
     }
 }
