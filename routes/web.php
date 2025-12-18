@@ -9,6 +9,7 @@ Route::resource('employees', EmployeeController::class);
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\AttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::get('/', function () {
 
 
 Route::get('/item', [App\Http\Controllers\ItemController::class, 'create']);
-Route::post('/item',[App\Http\Controllers\ItemController::class, 'store']);
+Route::post('/item', [App\Http\Controllers\ItemController::class, 'store']);
 
 // 商品関連
 Route::get('/items', [ItemController::class, 'index'])->name('items.index');
@@ -43,3 +44,18 @@ Route::get('/items/{item}/reviews', [ReviewController::class, 'index'])->name('i
 Route::post('/items/{item}/reviews', [ReviewController::class, 'store'])->name('items.reviews.store');
 Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
 
+// 出退勤関連
+Route::get('/attendances/create', [AttendanceController::class, 'create'])
+    ->name('attendances.create');
+
+Route::post('/attendances/clock-in', [AttendanceController::class, 'clockIn'])
+    ->name('attendances.clockIn');
+
+Route::post('/attendances/break-start', [AttendanceController::class, 'breakStart'])
+    ->name('attendances.breakStart');
+
+Route::post('/attendances/break-end', [AttendanceController::class, 'breakEnd'])
+    ->name('attendances.breakEnd');
+
+Route::post('/attendances/clock-out', [AttendanceController::class, 'clockOut'])
+    ->name('attendances.clockOut');
