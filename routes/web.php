@@ -44,18 +44,17 @@ Route::get('/items/{item}/reviews', [ReviewController::class, 'index'])->name('i
 Route::post('/items/{item}/reviews', [ReviewController::class, 'store'])->name('items.reviews.store');
 Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
 
-// 出退勤関連
-Route::get('/attendances/create', [AttendanceController::class, 'create'])
-    ->name('attendances.create');
+// 出退勤登録関連
+Route::get('/attendances/create', [AttendanceController::class, 'create'])->name('attendances.create');
+Route::post('/attendances/clock-in', [AttendanceController::class, 'clockIn'])->name('attendances.clockIn');
+Route::post('/attendances/break-start', [AttendanceController::class, 'breakStart'])->name('attendances.breakStart');
+Route::post('/attendances/break-end', [AttendanceController::class, 'breakEnd'])->name('attendances.breakEnd');
+Route::post('/attendances/clock-out', [AttendanceController::class, 'clockOut'])->name('attendances.clockOut');
 
-Route::post('/attendances/clock-in', [AttendanceController::class, 'clockIn'])
-    ->name('attendances.clockIn');
+// 出退勤編集関連
+Route::get('/attendances/{attendance}/edit', [AttendanceController::class, 'edit'])->name('attendances.edit');
+Route::put('/attendances/{attendance}', [AttendanceController::class, 'update'])->name('attendances.update');
 
-Route::post('/attendances/break-start', [AttendanceController::class, 'breakStart'])
-    ->name('attendances.breakStart');
 
-Route::post('/attendances/break-end', [AttendanceController::class, 'breakEnd'])
-    ->name('attendances.breakEnd');
-
-Route::post('/attendances/clock-out', [AttendanceController::class, 'clockOut'])
-    ->name('attendances.clockOut');
+// 出退勤一覧関連
+Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
