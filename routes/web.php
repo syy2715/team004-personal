@@ -1,36 +1,30 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmployeeController;
 
-Route::resource('employees', EmployeeController::class);
-
-
-use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AttendanceController;
-
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/item', [App\Http\Controllers\ItemController::class, 'create']);
-Route::post('/item', [App\Http\Controllers\ItemController::class, 'store']);
+// ユーザー
+Route::resource('users', UserController::class);
 
 // 商品関連
+Route::get('/item', [ItemController::class, 'create']);
+Route::post('/item', [ItemController::class, 'store']);
+
 Route::get('/items', [ItemController::class, 'index'])->name('items.index');
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
 Route::post('/items', [ItemController::class, 'store'])->name('items.store');

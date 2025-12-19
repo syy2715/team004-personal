@@ -8,9 +8,20 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * 所属課マスタ（ID → 表示名）
+     */
+    public const GROUPS = [
+            1 => '営業課',
+            2 => '人事課',
+            3 => '開発課',
+            4 => '経理課',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +35,11 @@ class User extends Authenticatable
         'age',
         'address',
         'phone',
-        'group',
+        
+        // 'group'ではなく
+        // こちらを使用
+        'group_id',
+
         'role',
         'sales_office',
         'start_day',
@@ -53,4 +68,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    /**
+     * 所属課名を取得（group_id → 表示名）
+     */
+    public function getGroupNameAttribute()
+    {
+        return self::GROUPS[$this->group_id] ?? '未設定';
+    }
 }
