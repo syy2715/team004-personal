@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\WorkTimeController;
 use App\Http\Controllers\AttendanceController;
 
 /*
@@ -37,6 +38,8 @@ Route::delete('/items/{item}', [ItemController::class, 'destroy'])->name('items.
 Route::get('/items/{item}/reviews', [ReviewController::class, 'index'])->name('items.reviews.index');
 Route::post('/items/{item}/reviews', [ReviewController::class, 'store'])->name('items.reviews.store');
 Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
+
+
 
 // 出退勤登録関連
 Route::get('/attendances/create', [AttendanceController::class, 'create'])->name('attendances.create');

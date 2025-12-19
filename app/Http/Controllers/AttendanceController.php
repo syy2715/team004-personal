@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class AttendanceController extends Controller
 {
@@ -13,16 +16,32 @@ class AttendanceController extends Controller
      */
     private function tempEmployeeId()
     {
+        // return Auth::id(); // employees.id
         return 1; // employees.id
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $attendances = Attendance::where('employee_id', $this->tempEmployeeId())
-            ->orderBy('work_date', 'desc')
-            ->get();
+        // $attendances = Attendance::where('employee_id', $this->tempEmployeeId())
+        //     ->orderBy('work_date', 'desc')
+        //     ->get();
 
-        return view('attendances.index', compact('attendances'));
+        // return view('attendances.index', compact('attendances'));
+         // 表示月（YYYY-MM）
+        $month = $request->input('month', now()->format('Y-m'));
+
+        $start = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
+        $end   = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
+        $dates = CarbonPeriod::create($start, $end);
+
+        $attendances = Attendance::where('employee_id', $this->tempEmployeeId())
+            ->whereBetween('work_date', [$start, $end])
+            ->orderBy('work_date')
+            ->get()
+            ->keyBy(fn ($a) => $a->work_date->format('Y-m-d'));
+            
+
+        return view('attendances.index', compact('month', 'attendances', 'dates'));
     }
 
     public function create()
