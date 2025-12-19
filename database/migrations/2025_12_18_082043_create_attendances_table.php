@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')
+            $table->foreignId('employee_id')
                 ->constrained()
                 ->cascadeOnDelete();
             $table->date('work_date');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
             
             // 二重登録防止
-            $table->unique(['user_id', 'work_date']);
+            $table->unique(['employee_id', 'work_date']);
             
             // 予備
             $table->string('spare1')->nullable();

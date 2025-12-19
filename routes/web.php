@@ -45,13 +45,8 @@ Route::get('/items/{item}/reviews', [ReviewController::class, 'index'])->name('i
 Route::post('/items/{item}/reviews', [ReviewController::class, 'store'])->name('items.reviews.store');
 Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
 
-//　出退勤関連
-Route::get('/work-times', [WorkTimeController::class, 'index']);
-Route::get('/work-times', [WorkTimeController::class, 'index'])->name('work.index');
-Route::post('/work-times/start', [WorkTimeController::class, 'start'])->name('work.start');
-Route::post('/work-times/end', [WorkTimeController::class, 'end'])->name('work.end');
-Route::post('/work-times/rest-on', [WorkTimeController::class, 'restOn'])->name('work.rest_on');
-Route::post('/work-times/rest-back', [WorkTimeController::class, 'restBack'])->name('work.rest_back');
+
+
 // 出退勤登録関連
 Route::get('/attendances/create', [AttendanceController::class, 'create'])->name('attendances.create');
 Route::post('/attendances/clock-in', [AttendanceController::class, 'clockIn'])->name('attendances.clockIn');
