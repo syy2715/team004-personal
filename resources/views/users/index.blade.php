@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1>社員一覧</h1>
-    <a href="{{ route(' users.create ') }}" class="btn btn-primary">
+    <a href="{{ url('/users/create') }}" class="btn btn-primary">
         + 新規登録
     </a>
 </div>
@@ -37,8 +37,9 @@
     <td>{{ $user->email }}</td>
     <td>{{ $user->phone ?? '未登録' }}</td>
     <td>
-        <a href="{{ route('users.edit', $user->id) }}">編集</a>
-        <form action="{{ route('users.destroy', $user->id) }}"
+        <a href="{{ url('/users/' . $user->id . '/edit') }}">編集</a>
+
+        <form action="{{ url('/users/' . $user->id) }}"
             method="POST" style="display:inline;">
             @csrf
             @method('DELETE')
