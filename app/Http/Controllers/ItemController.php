@@ -17,8 +17,25 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        return redirect('/item');
+        $validated = $request->validate([
+        'name' => 'required',
+        'type' => 'required',
+        'price' => 'required|numeric',
+        'stock' => 'required|integer',
+        'storage' => 'required',
+        'description' => 'nullable',
+    ]);
+    if ($request->hasFile('image_path')) {
+    $path = $request->file('image_path')->store('items', 'public');
+    $validated['image_path'] = $path;
+}
+
+    Item::create($validated);
+
+        return redirect('/items')
+                        ->with('success', '商品を登録しました');
     }
+
 
     public function index(Request $request)
     {
@@ -62,4 +79,32 @@ class ItemController extends Controller
         
         return redirect('/items');
     }
+
+    public function edit(Item $item) {        
+        return view('items.edit', compact('item'));
+    }
+
+    public function update(Request $request, Item $item) {
+    $validated = $request->validate([
+        'name' => 'required',
+        'type' => 'required',
+        'price' => 'required|numeric',
+        'stock' => 'required|integer',
+        'storage' => 'required',
+        'description' => 'nullable',
+    ]);
+
+    $item->update($validated);
+
+    // 画像がアップロードされた時だけ更新
+    if ($request->hasFile('image_path')) {
+        $path = $request->file('image_path')->store('items', 'public');
+        $item->image_path = $path;
+        $item->save();
+    }
+
+    return redirect()->route('items.index')
+                     ->with('success', '商品を更新しました');
+    }
+
 }
