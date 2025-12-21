@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <h1>社員一覧</h1>
 
 <table border="1" cellpadding="8">
@@ -34,3 +35,5 @@
     </td>
 </tr>
 @endforeach
+
+@endsection
