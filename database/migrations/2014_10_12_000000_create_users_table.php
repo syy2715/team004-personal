@@ -17,12 +17,12 @@ Schema::create('users', function (Blueprint $table) {
     $table->string('email')->unique();  // メールアドレス
     $table->timestamp('email_verified_at')->nullable(); // 確認日時
     $table->string('password');  // パスワード
-    $table->integer('age');      // 年齢
+    $table->integer('age')->nullable();      // 年齢
     $table->string('address')->nullable(); // 住所
     $table->string('phone')->nullable();   // 電話番号
-    $table->unsignedBigInteger('group'); // 部署
-    $table->unsignedBigInteger('role');  // 役職
-    $table->unsignedBigInteger('sales_office'); // 営業所
+    $table->unsignedBigInteger('group')->nullable(); // 部署
+    $table->unsignedBigInteger('role')->nullable();  // 役職
+    $table->unsignedBigInteger('sales_office')->nullable(); // 営業所
     $table->timestamp('start_day')->nullable(); // 入社日
     $table->string('remember_token')->nullable(); // トークン
 
