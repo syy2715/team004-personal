@@ -66,7 +66,12 @@ class UserController extends Controller
     }
 
 
-    public function create() {}
+   // 修正後
+    public function create()
+    {
+        // users/create.blade.php を表示するように指定
+        return view('users.create');
+    }
     public function store(Request $request) {}
     public function show(User $user) {}
 }
