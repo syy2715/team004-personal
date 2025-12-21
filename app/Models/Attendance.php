@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Attendance extends Model
 {
     protected $fillable = [
-        'employee_id',
+        'user_id',
         'work_date',
         'clock_in',
         'clock_out',
@@ -24,7 +24,7 @@ class Attendance extends Model
         'break_out' => 'datetime:H:i:s',
     ];
 
-    public function employee()
+    public function user()
     {
         return $this->belongsTo(Employee::class);
     }
