@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class UserSeeder extends Seeder  
+class UserSeeder extends Seeder
 {
     public function run(): void
     {
@@ -17,6 +17,8 @@ class UserSeeder extends Seeder
             'phone' => '090-1111-2222',
             'group_id' => 1,
             'role' => 1,
+            'sales_office' => 1, // 追加
+            'age' => 30,          // 追加
         ]);
 
         User::create([
@@ -26,6 +28,8 @@ class UserSeeder extends Seeder
             'phone' => '080-3333-4444',
             'group_id' => 4,
             'role' => 1,
+            'sales_office' => 1, // 追加
+            'age' => 25,          // 追加
         ]);
     }
 }
