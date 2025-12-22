@@ -1,21 +1,5 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>社員一覧</h1>
-    <a href="{{ route('users.create') }}" class="btn btn-primary">
-        + 新規登録
-    </a>
-</div>
-
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-
-<table class="table table-bordered table-hover align-middle">
-    <thead class="table-light">
+<table class="table table-bordered table-hover align-middle text-center">
+    <thead class="table-dark">
         <tr>
             <th>ID</th>
             <th>名前</th>
@@ -30,18 +14,17 @@
         <tr>
             <td>{{ $user->id }}</td>
             <td>{{ $user->name }}</td>
-            <td>{{ $user->department }}</td>
+            <td>{{ $user->group_name }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->phone ?? '未登録' }}</td>
             <td>
-                <a href="{{ route('users.edit', $user) }}"
-                    class="btn btn-sm btn-warning me-1">
+                <a href="{{ url('/users/' . $user->id . '/edit') }}"
+                    class="btn btn-sm btn-warning">
                     編集
                 </a>
 
-                <form action="{{ route('users.destroy', $user) }}"
-                        method="POST"
-                        class="d-inline">
+                <form action="{{ url('/users/' . $user->id) }}"
+                        method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
@@ -55,4 +38,3 @@
         @endforeach
     </tbody>
 </table>
-@endsection
