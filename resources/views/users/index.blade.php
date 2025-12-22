@@ -1,56 +1,66 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>社員一覧</h1>
-    <a href="{{ route(' users.create ') }}" class="btn btn-primary">
-        + 新規登録
-    </a>
-</div>
+<div class="container py-5">
 
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="fw-bold text-primary">社員一覧</h1>
+        <a href="{{ route('users.create') }}" class="btn btn-primary">
+            + 新規登録
+        </a>
     </div>
-@endif
 
-<table class="table table-">
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>名前</th>
+                        <th>所属課</th>
+                        <th>メール</th>
+                        <th>電話番号</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($users as $user)
+                        <tr>
+                            <td>{{ $user->id }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->group_name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->phone ?? '未登録' }}</td>
+                            <td>
+                                <a href="{{ route('users.edit', $user->id) }}"
+                                    class="btn btn-sm btn-outline-primary">
+                                    編集
+                                </a>
 
+                                <form action="{{ route('users.destroy', $user->id) }}"
+                                        method="POST"
+                                        class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('削除しますか？')">
+                                        削除
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-
-<table border="1" cellpadding="8">
-    <tr>
-        <th>ID</th>
-        <th>名前</th>
-        <th>所属課</th>
-        <th>メール</th>
-        <th>電話番号</th>
-        <th>操作</th>
-    </tr>
-
-@foreach ($users as $user)
-<tr>
-    <td>{{ $user->id }}</td>
-    <td>{{ $user->name }}</td>
-    <td>{{ $user->group_name }}</td>
-    <td>{{ $user->email }}</td>
-    <td>{{ $user->phone ?? '未登録' }}</td>
-    <td>
-        <a href="{{ route('users.edit', $user->id) }}">編集</a>
-        <form action="{{ route('users.destroy', $user->id) }}"
-            method="POST" style="display:inline;">
-            @csrf
-            @method('DELETE')
-            <button type="submit"
-                    onclick="return confirm('削除しますか？')">
-                削除
-            </button>
-        </form>
-    </td>
-</tr>
-@endforeach
-
-</table>
+</div>
 @endsection
-
