@@ -1,0 +1,9 @@
+.edit-card {
+    background: linear-gradient(135deg, #f5faff, #e3f2fd);
+    border: none;
+}
+
+.edit-card .form-label {
+    font-weight: 600;
+    color: #333;
+}
