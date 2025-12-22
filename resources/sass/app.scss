@@ -6,3 +6,18 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+@import 'bootstrap/scss/bootstrap';
+
+body {
+    background: linear-gradient(135deg, #f0f7ff, #ffffff);
+}
+
+.edit-card {
+    border-radius: 16px;
+    background: linear-gradient(180deg, #ffffff, #f8fbff);
+}
+
+.table thead {
+    background-color: #eaf2ff;
+}
