@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -13,6 +14,50 @@ class UserController extends Controller
         $users = User::all();
         return view('users.index', compact('users'));
     }
+
+    // 新規登録画面
+    public function create()
+    {
+        // 所属課（Userモデルの定数を使用）
+        $groups = User::GROUPS;
+
+        // 役職
+        $roles = [
+            'admin'    => '管理者',
+            'manager' => '上長',
+            'employee'=> '一般社員',
+        ];
+
+        return view('users.create', compact('groups', 'roles'));
+    }
+
+    // 登録処理
+
+    public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email',
+        'password' => 'required|min:6',
+        'role' => 'required|integer',
+        'group_id' => 'required|integer',
+        'sales_office' => 'required',
+    ]);
+
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => bcrypt($request->password),
+        'age' => $request->age,
+        'phone' => $request->phone,
+        'group_id' => $request->group_id,
+        'role' => $request->role,   // ← 数値
+        'sales_office' => $request->sales_office,
+    ]);
+
+    return redirect()->route('users.index')
+        ->with('success', '社員を登録しました');
+}
 
     // 編集画面
     public function edit(User $user)
@@ -65,13 +110,5 @@ class UserController extends Controller
             ->with('success', '削除しました');
     }
 
-
-   // 修正後
-    public function create()
-    {
-        // users/create.blade.php を表示するように指定
-        return view('users.create');
-    }
-    public function store(Request $request) {}
-    public function show(User $user) {}
 }
+

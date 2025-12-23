@@ -36,14 +36,27 @@
     </div>
 
     <div>
+    <label>所属課</label>
+    <select name="group_id">
+        <option value="">選択してください</option>
+        @foreach(\App\Models\User::GROUPS as $key => $label)
+            <option value="{{ $key }}" {{ old('group_id') == $key ? 'selected' : '' }}>
+                {{ $label }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
+    <div>
         <label>役職</label>
+
         <select name="role">
             <option value="">選択してください</option>
-            @foreach(\App\Models\User::ROLES as $key => $label)
+                @foreach(\App\Models\User::ROLES as $key => $label)
                 <option value="{{ $key }}" {{ old('role') == $key ? 'selected' : '' }}>
-                   {{ $label }}
+                    {{ $label }}
                 </option>
-             @endforeach
+            @endforeach
         </select>
     </div>
         <div>
