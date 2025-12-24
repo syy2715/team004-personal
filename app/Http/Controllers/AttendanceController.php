@@ -16,8 +16,8 @@ class AttendanceController extends Controller
      */
     private function tempUserId()
     {
-        // return Auth::id(); // users.id
-        return 1; // users.id
+        return Auth::id(); // users.id
+        // return 1; // users.id
     }
 
     public function index(Request $request)
