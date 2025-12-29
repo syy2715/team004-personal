@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');       // 商品名
             $table->unsignedBigInteger('price'); // 価格
             $table->unsignedBigInteger('type');  // 分類
-            $table->string('storage');           // 保管場所
+            $table->unsignedBigInteger('storage');           // 保管場所
             $table->unsignedBigInteger('stock'); // 在庫数
             $table->decimal('avg_rating', 3, 2)->default(0); // 平均評価 例: 4.25
             $table->string('description')->nullable(); // 備考（nullableに変更）

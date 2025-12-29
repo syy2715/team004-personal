@@ -52,7 +52,14 @@
 
                         <div class="mb-3">
                             <label for="storage" class="form-label">保管場所</label>
-                            <input type="text" class="form-control" name="storage" id="storage">
+                            <select name="storage" id="storage" class="form-select">
+                                <option value="">選択してください</option>
+                                @foreach ($storage as $key => $label)
+                                <option value="{{ $key }}">
+                                    {{ $label }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="mb-4">

@@ -22,7 +22,22 @@ class ItemController extends Controller
             '7' => 'その他',
         ];
 
-        return view('item', compact('type'));
+        $storage = [
+            '1' => 'A-1',
+            '2' => 'A-2',
+            '3' => 'A-3',
+            '4' => 'A-4',
+            '5' => 'B-1',
+            '6' => 'B-2',
+            '7' => 'B-3',
+            '8' => 'B-4',
+            '9' => 'C-1',
+            '10' => 'C-2',
+            '11' => 'C-3',
+            '12' => 'C-4',
+        ];
+
+        return view('item', compact('type', 'storage'));
     }
 
     public function store(Request $request)
