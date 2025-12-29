@@ -7,8 +7,8 @@
         </div>
 
         <ul class="navbar-menu">
-            <li><a href="{{ route('users.index') }}">ユーザー一覧</a></li>
-            <li><a href="{{ route('items.index') }}">商品一覧</a></li>
+            <li><a href="{{ route('users.index') }}">ユーザー</a></li>
+            <li><a href="{{ route('items.index') }}">商品</a></li>
             <li><a href="{{ route('attendances.create') }}">出退勤登録</a></li>
             <li><a href="{{ route('attendances.index') }}">出退勤一覧</a></li>
 

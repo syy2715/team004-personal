@@ -48,8 +48,8 @@ return "<a href='{$url}'>{$label} {$arrow}</a>";
                 </a>
             </td>
             <td>{{ $item->price }}</td>
-            <td>{{ $item->type }}</td>
-            <td>{{ $item->storage }}</td>
+            <td>{{ $item->type_label }}</td>
+            <td>{{ $item->storage_label }}</td>
             <td>{{ $item->stock }}</td>
             <td>
                 @if ($item->reviews_count > 0)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -25,7 +26,7 @@ class UserController extends Controller
         $roles = [
             'admin'    => '管理者',
             'manager' => '上長',
-            'employee'=> '一般社員',
+            'employee' => '一般社員',
         ];
 
         return view('users.create', compact('groups', 'roles'));
@@ -34,71 +35,83 @@ class UserController extends Controller
     // 登録処理
 
     public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required',
-        'email' => 'required|email',
-        'password' => 'required|min:6',
-        'role' => 'required|integer',
-        'group_id' => 'required|integer',
-        'sales_office' => 'required',
-    ]);
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'role' => 'required|integer',
+            'group_id' => 'required|integer',
+            'sales_office' => 'required',
+        ]);
 
-    User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => bcrypt($request->password),
-        'age' => $request->age,
-        'phone' => $request->phone,
-        'group_id' => $request->group_id,
-        'role' => $request->role,   // ← 数値
-        'sales_office' => $request->sales_office,
-    ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'age' => $request->age,
+            'phone' => $request->phone,
+            'group_id' => $request->group_id,
+            'role' => $request->role,   // ← 数値
+            'sales_office' => $request->sales_office,
+        ]);
 
-    return redirect()->route('users.index')
-        ->with('success', '社員を登録しました');
-}
+        auth()->login($user);
+
+        return redirect()->route('home')
+            ->with('success', '社員を登録しました');
+    }
 
     // 編集画面
     public function edit(User $user)
-{
-    $groups = [
-        1 => '営業課',
-        2 => '人事部',
-        3 => '総務部',
-        4 => '開発部',
-    ];
+    {
+        $groups = [
+            1 => '営業課',
+            2 => '人事部',
+            3 => '総務部',
+            4 => '開発部',
+        ];
 
-    return view('users.edit', compact('user', 'groups'));
-}
+        return view('users.edit', compact('user', 'groups'));
+    }
 
     // 更新
     public function update(Request $request, User $user)
-{
-    $request->validate([
-        'name' => 'required',
-        'email' => 'required|email',
-        'group_id' => 'required|integer',
-        'phone' => 'nullable',
-        'password' => 'nullable|min:6',
-    ]);
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($user->id),
+            ],
+            'group_id' => 'required|integer',
+            'role' => 'required|integer',
+            'sales_office' => 'required',
+            'phone' => 'nullable',
+            'age' => 'nullable|integer|min:0|max:120',
+            'password' => 'nullable|min:6',
+        ]);
 
-    $data = $request->only([
-        'name',
-        'email',
-        'group_id',
-        'phone',
-    ]);
+        $data = $request->only([
+            'name',
+            'email',
+            'group_id',
+            'role',
+            'sales_office',
+            'phone',
+            'age',
+        ]);
 
-    if ($request->filled('password')) {
-        $data['password'] = bcrypt($request->password);
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($request->password);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('users.index')
+            ->with('success', '更新しました');
     }
-
-    $user->update($data);
-
-    return redirect()->route('users.index')
-        ->with('success', '更新しました');
-}
 
 
     // 削除
@@ -109,6 +122,4 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success', '削除しました');
     }
-
 }
-

@@ -69,7 +69,7 @@ Route::put('/attendances/{attendance}', [AttendanceController::class, 'update'])
 Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 

@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container py-4"> 
+<div class="container py-4">
     <div class="row justify-content-center">
         <div class="col-md-5 col-lg-4">
 
@@ -47,12 +47,16 @@
 
                         <div class="mb-3">
                             <label for="type" class="form-label">分類</label>
-                            <input type="text"
-                                class="form-control"
-                                name="type"
-                                id="type"
-                                value="{{ old('type', $item->type) }}">
+                            <select name="type" id="type" class="form-select">
+                                @foreach ($type as $key => $label)
+                                <option value="{{ $key }}"
+                                    @selected(old('type', $item->type) == $key)>
+                                    {{ $label }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
+
 
                         <div class="mb-3">
                             <label for="price" class="form-label">価格</label>
@@ -74,12 +78,16 @@
 
                         <div class="mb-3">
                             <label for="storage" class="form-label">保管場所</label>
-                            <input type="text"
-                                class="form-control"
-                                name="storage"
-                                id="storage"
-                                value="{{ old('storage', $item->storage) }}">
+                            <select name="storage" id="storage" class="form-select">
+                                @foreach ($storage as $key => $label)
+                                <option value="{{ $key }}"
+                                    @selected(old('storage', $item->storage) == $key)>
+                                    {{ $label }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
+
 
                         <div class="mb-4">
                             <label for="description" class="form-label">備考</label>

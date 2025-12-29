@@ -14,24 +14,24 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     public const ROLES = [
-    1 => '管理者',
-    2 => '上長',
-    3 => '一般社員',
-];
+        1 => '管理者',
+        2 => '上長',
+        3 => '一般社員',
+    ];
 
-public function getRoleNameAttribute()
-{
-    return self::ROLES[$this->role] ?? '未設定';
-}
+    public function getRoleNameAttribute()
+    {
+        return self::ROLES[$this->role] ?? '未設定';
+    }
 
     /**
      * 所属課マスタ（ID → 表示名）
      */
     public const GROUPS = [
-            1 => '営業課',
-            2 => '人事課',
-            3 => '開発課',
-            4 => '経理課',
+        1 => '営業課',
+        2 => '人事課',
+        3 => '開発課',
+        4 => '経理課',
     ];
 
     // 営業所マスタを追加
@@ -41,8 +41,8 @@ public function getRoleNameAttribute()
         3 => '名古屋営業所',
         4 => '福岡営業所',
     ];
-    
-     /*
+
+    /*
      * @var array<int, string>
      */
     protected $fillable = [
@@ -52,7 +52,7 @@ public function getRoleNameAttribute()
         'age',
         'address',
         'phone',
-        
+
         // 'group'ではなくこちらを使用
         'group_id',
 

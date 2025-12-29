@@ -41,14 +41,14 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}"
                             href="{{ route('users.index') }}">
-                            ユーザー一覧
+                            社員情報
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('items.*') ? 'active' : '' }}"
                             href="{{ route('items.index') }}">
-                            商品一覧
+                            商品情報
                         </a>
                     </li>
 
