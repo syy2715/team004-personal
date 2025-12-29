@@ -56,8 +56,11 @@
                     <div class="mb-3">
                         <label class="form-label">評価</label>
                         <select name="rating" class="form-select">
+                            <option value="" disabled selected>評価を選択してください</option>
                             @for ($i = 5; $i >= 1; $i--)
-                            <option value="{{ $i }}">{{ $i }}</option>
+                            <option value="{{ $i }}" {{ old('rating') == $i ? 'selected' : '' }}>
+                                {{ $i }}
+                            </option>
                             @endfor
                         </select>
                     </div>
