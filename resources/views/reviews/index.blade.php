@@ -1,114 +1,111 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>レビュー投稿</title>
+@extends('layouts.app')
 
-    <style>
-        body {
-            font-family: sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 24px;
-            border-radius: 8px;
-        }
-        h2, h3 {
-            margin-top: 0;
-        }
-        .item {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        .item img {
-            border-radius: 4px;
-        }
-        .review {
-            border-top: 1px solid #ddd;
-            padding: 12px 0;
-        }
-        .btn {
-            display: inline-block;
-            padding: 8px 16px;
-            background: #3490dc;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            border: none;
-        }
-        .btn-secondary {
-            background: #6c757d;
-        }
-        textarea, select {
-            width: 100%;
-            margin-bottom: 12px;
-        }
-    </style>
-</head>
+@section('title', 'レビュー投稿')
 
-<body>
-<div class="container">
+@section('content')
 
-    <a href="{{ route('items.index') }}" class="btn btn-secondary">
-        商品一覧へ戻る
-    </a>
+<div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
 
-    <h2>{{ $item->name }} のレビュー</h2>
+        {{-- 戻るボタン --}}
+        <div class="mb-3">
+            <a href="{{ route('items.index') }}" class="btn btn-outline-secondary">
+                商品一覧へ戻る
+            </a>
+        </div>
 
-    <div class="item">
-        @if ($item->image_path)
-            <img src="{{ asset('storage/' . $item->image_path) }}" height="120">
-        @endif
+        {{-- 商品情報 --}}
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">{{ $item->name }}</h5>
+            </div>
 
-        <div>
-            <p>
-                平均評価：
-                @if ($item->reviews->count() > 0)
-                    {{ number_format($item->reviews->avg('rating'), 2) }}
-                    ({{ $item->reviews->count() }})
-                @else
-                    未評価
+            <div class="card-body d-flex gap-4 align-items-start">
+                @if ($item->image_path)
+                <img src="{{ asset('storage/' . $item->image_path) }}"
+                    height="120"
+                    class="rounded">
                 @endif
-            </p>
+
+                <div>
+                    <p class="mb-2">
+                        平均評価：
+                        @if ($item->reviews->count() > 0)
+                        <strong>
+                            {{ number_format($item->reviews->avg('rating'), 2) }}
+                        </strong>
+                        （{{ $item->reviews->count() }}）
+                        @else
+                        未評価
+                        @endif
+                    </p>
+                </div>
+            </div>
         </div>
+
+        {{-- レビュー投稿 --}}
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">レビュー投稿</h5>
+            </div>
+
+            <div class="card-body">
+                <form action="{{ route('items.reviews.store', $item->id) }}" method="POST">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label class="form-label">評価</label>
+                        <select name="rating" class="form-select">
+                            @for ($i = 5; $i >= 1; $i--)
+                            <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">コメント</label>
+                        <textarea name="review"
+                            rows="4"
+                            class="form-control"></textarea>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">
+                            投稿
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {{-- レビュー一覧 --}}
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">レビュー一覧</h5>
+            </div>
+
+            <div class="card-body">
+                @forelse ($reviews as $review)
+                <div class="border-bottom pb-3 mb-3">
+                    <div class="fw-bold mb-1">
+                        ★ {{ $review->rating }}
+                        <span class="text-muted">
+                            （{{ $review->user->name ?? '匿名' }}）
+                        </span>
+                    </div>
+                    <div>
+                        {{ $review->review }}
+                    </div>
+                </div>
+                @empty
+                <p class="text-muted mb-0">
+                    レビューはまだありません
+                </p>
+                @endforelse
+            </div>
+        </div>
+
     </div>
-
-    <h3>レビュー投稿</h3>
-
-    <form action="{{ route('items.reviews.store', $item->id) }}" method="POST">
-        @csrf
-
-        <label>評価</label>
-        <select name="rating">
-            @for ($i = 5; $i >= 1; $i--)
-                <option value="{{ $i }}">{{ $i }}</option>
-            @endfor
-        </select>
-
-        <label>コメント</label>
-        <textarea name="review" rows="5"></textarea>
-
-        <button type="submit" class="btn">投稿</button>
-    </form>
-
-    <h3>レビュー一覧</h3>
-
-    @forelse ($reviews as $review)
-        <div class="review">
-            ★ {{ $review->rating }}（{{ $review->user->name }}）<br>
-            {{ $review->review }}
-        </div>
-    @empty
-        <p>レビューはまだありません</p>
-    @endforelse
-
 </div>
-</body>
-</html>
+
+@endsection

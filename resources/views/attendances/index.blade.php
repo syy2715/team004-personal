@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', '出退勤一覧')
+
 @section('content')
     <h2>出退勤一覧画面</h2>
     <a href="{{ route('attendances.create') }}">出退勤登録画面へ</a>

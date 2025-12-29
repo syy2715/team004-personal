@@ -1,78 +1,134 @@
 @extends('layouts.app')
 
+@section('title', '社員編集')
+
 @section('content')
-<div class="container py-5">
+<div class="container py-4">
 
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-7">
+        <div class="col-md-5 col-lg-4">
 
-            <h1 class="text-center mb-4">社員情報編集</h1>
+            <div class="card shadow-sm">
+                <div class="card-header text-center">
+                    <h5 class="mb-0">社員編集</h5>
+                </div>
 
-            <div class="card shadow-sm edit-card">
-                <div class="card-body p-4">
-
-                    <form action="{{ route('users.update', $user->id) }}" method="POST">
+                <div class="card-body">
+                    <form method="POST" action="{{ route('users.update', $user->id) }}">
                         @csrf
                         @method('PUT')
 
-                        {{-- 名前 --}}
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label class="form-label">名前</label>
-                            <input type="text"
-                                    name="name"
-                                    class="form-control form-control-lg"
-                                    value="{{ old('name', $user->name) }}">
+                            <input
+                                type="text"
+                                name="name"
+                                class="form-control"
+                                value="{{ old('name', $user->name) }}">
                         </div>
 
-                        {{-- 所属課 --}}
-                        <div class="mb-4">
+                        <div class="mb-3">
+                            <label class="form-label">年齢</label>
+                            <input
+                                type="number"
+                                name="age"
+                                class="form-control"
+                                min="0"
+                                max="120"
+                                value="{{ old('age', $user->age) }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">メールアドレス</label>
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control"
+                                value="{{ old('email', $user->email) }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">電話番号</label>
+                            <input
+                                type="text"
+                                name="phone"
+                                class="form-control"
+                                value="{{ old('phone', $user->phone) }}">
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label">所属課</label>
-                            <select name="group_id" class="form-select form-select-lg">
+                            <select name="group_id" class="form-select">
                                 <option value="">選択してください</option>
-                                <option value="1" {{ old('group_id', $user->group_id) == 1 ? 'selected' : '' }}>営業課</option>
-                                <option value="2" {{ old('group_id', $user->group_id) == 2 ? 'selected' : '' }}>人事課</option>
-                                <option value="3" {{ old('group_id', $user->group_id) == 3 ? 'selected' : '' }}>開発課</option>
-                                <option value="4" {{ old('group_id', $user->group_id) == 4 ? 'selected' : '' }}>経理課</option>
+                                @foreach(\App\Models\User::GROUPS as $key => $label)
+                                    <option value="{{ $key }}"
+                                        {{ old('group_id', $user->group_id) == $key ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
-                        {{-- メール --}}
-                        <div class="mb-4">
-                            <label class="form-label">メール</label>
-                            <input type="email"
-                                    name="email"
-                                    class="form-control form-control-lg"
-                                    value="{{ old('email', $user->email) }}">
+                        <div class="mb-3">
+                            <label class="form-label">役職</label>
+                            <select name="role" class="form-select">
+                                <option value="">選択してください</option>
+                                @foreach(\App\Models\User::ROLES as $key => $label)
+                                    <option value="{{ $key }}"
+                                        {{ old('role', $user->role) == $key ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
-                        {{-- 電話番号 --}}
-                        <div class="mb-4">
-                            <label class="form-label">電話番号</label>
-                            <input type="text"
-                                    name="phone"
-                                    class="form-control form-control-lg"
-                                    value="{{ old('phone', $user->phone) }}">
+                        <div class="mb-3">
+                            <label class="form-label">営業所</label>
+                            <select name="sales_office" class="form-select">
+                                <option value="">選択してください</option>
+                                @foreach(\App\Models\User::SALES_OFFICES as $key => $label)
+                                    <option value="{{ $key }}"
+                                        {{ old('sales_office', $user->sales_office) == $key ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
-                        {{-- パスワード --}}
                         <div class="mb-4">
-                            <label class="form-label">パスワード（変更時のみ）</label>
-                            <input type="password"
-                                    name="password"
-                                    class="form-control form-control-lg">
+                            <label class="form-label">
+                                パスワード
+                                <span class="text-muted small">（変更する場合のみ）</span>
+                            </label>
+                            <input
+                                type="password"
+                                name="password"
+                                class="form-control">
                         </div>
 
-                        <div class="d-flex justify-content-between mt-4">
-                            <a href="{{ route('users.index') }}" class="btn btn-outline-secondary btn-lg">
-                                一覧に戻る
+                        <div class="d-flex justify-content-between gap-2">
+                            <a href="{{ route('users.index') }}"
+                                class="btn btn-outline-secondary w-50">
+                                一覧へ戻る
                             </a>
-                            <button type="submit" class="btn btn-primary btn-lg">
+
+                            <button type="submit"
+                                class="btn btn-primary w-50">
                                 更新
                             </button>
                         </div>
-
                     </form>
 
+                    {{-- バリデーションエラー --}}
+                    @if ($errors->any())
+                    <div class="alert alert-danger mt-4 mb-0">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                 </div>
             </div>
 
