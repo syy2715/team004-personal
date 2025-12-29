@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', '出退勤編集')
+
 @section('content')
 <style>
     .edit-container {

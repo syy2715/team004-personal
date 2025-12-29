@@ -3,11 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
-// use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\WorkTimeController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,11 +68,12 @@ Route::put('/attendances/{attendance}', [AttendanceController::class, 'update'])
 // 出退勤一覧関連
 Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
 
+
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
 // ルートの一覧を表示するページ（開発が終わったら消します）
 use App\Http\Controllers\RouteListController;
 
 Route::get('/route-list', [RouteListController::class, 'index'])->name('route.list');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

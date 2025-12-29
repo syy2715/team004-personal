@@ -1,41 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品登録</title>
-</head>
-<body>
-    <h1>商品登録画面</h1>
+@extends('layouts.app')
 
-    
-    <form action="{{ url('item') }}" method="POST" enctype="multipart/form-data">
-@csrf
+@section('title', '商品登録')
 
-    <label for="image_path">{{ __('商品画像') }}
-        <p><input type="file" class="form-control" name="image_path" id="image_path"></p>
+@section('content')
 
-   <label for="name">{{ __('商品名') }}
-        <p><input type="text" class="form-control" name="name" id="name"></p>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
 
-    <label for="type">{{ __('分類') }}
-        <p><input type="text" class="form-control" name="type" id="type"></p>
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">商品登録</h5>
+                </div>
 
-    <label for="price">{{ __('価格') }}
-        <p><input type="text" class="form-control" name="price" id="price"></p>
-        
-    <label for="stock">{{ __('在庫数') }}</label>
-        <p><input type="text" class="form-control" name="stock" id="stock"></p>
-    
-    <label for="storage">{{ __('保管場所') }}</label>
-        <p><input type="text" class="form-control" name="storage" id="storage"></p>
+                <div class="card-body">
+                    <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
 
-            <label for="description">{{ __('備考') }}</label>
-        <p><input type="text" class="form-control" name="description" id="description"></p>
+                        <div class="mb-3">
+                            <label for="image_path" class="form-label">商品画像</label>
+                            <input type="file" class="form-control" name="image_path" id="image_path">
+                        </div>
 
-<button type="submit" class="btn btn-success">
-    {{ ('登録') }}
-</button>
-</form>
-</body>
-</html>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">商品名</label>
+                            <input type="text" class="form-control" name="name" id="name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="type" class="form-label">分類</label>
+                            <select name="type" id="type" class="form-select">
+                                <option value="">選択してください</option>
+                                @foreach ($type as $key => $label)
+                                <option value="{{ $key }}">
+                                    {{ $label }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="price" class="form-label">価格</label>
+                            <input type="text" class="form-control" name="price" id="price">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="stock" class="form-label">在庫数</label>
+                            <input type="text" class="form-control" name="stock" id="stock">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="storage" class="form-label">保管場所</label>
+                            <input type="text" class="form-control" name="storage" id="storage">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="description" class="form-label">備考</label>
+                            <input type="text" class="form-control" name="description" id="description">
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('items.index') }}" class="btn btn-outline-secondary">
+                                一覧へ戻る
+                            </a>
+
+                            <button type="submit" class="btn btn-success">
+                                登録
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@endsection

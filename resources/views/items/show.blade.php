@@ -1,111 +1,93 @@
-<!DOCTYPE html>
-<html lang="ja">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>レビュー一覧</title>
+@section('title', '商品詳細')
 
-    <style>
-        body {
-            font-family: sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
+@section('content')
+<div class="container py-4"> 
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
 
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 24px;
-            border-radius: 8px;
-        }
-
-        h2,
-        h3 {
-            margin-top: 0;
-        }
-
-        .item {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .item img {
-            border-radius: 4px;
-        }
-
-        .review {
-            border-top: 1px solid #ddd;
-            padding: 12px 0;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 8px 16px;
-            background: #3490dc;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-
-        <p>
-            <a href="{{ route('items.index') }}" class="btn btn-secondary">
-                商品一覧へ戻る
+            <a href="{{ route('items.index') }}"
+                class="btn btn-outline-secondary btn-sm mb-2 w-100">
+                一覧へ戻る
             </a>
-        </p>
-        <h2>{{ $item->name }}</h2>
 
-        <div class="item">
-            @if ($item->image_path)
-            <img src="{{ asset('storage/' . $item->image_path) }}" height="120">
-            @endif
+            <div class="card shadow-sm mb-3">
+                <div class="card-body p-3">
 
-            <div>
-                <p>{{ $item->description }}</p>
-
-                <p>
-                    平均評価：
-                    @if ($item->reviews->count() > 0)
-                    {{ number_format($item->reviews->avg('rating'), 2) }}
-                    ({{ $item->reviews->count() }})
-                    @else
-                    未評価
+                    {{-- 画像 --}}
+                    @if ($item->image_path)
+                    <div class="text-center mb-2">
+                        <img src="{{ asset('storage/' . $item->image_path) }}"
+                            class="img-fluid rounded"
+                            style="max-height: 120px;">
+                    </div>
                     @endif
-                </p>
+
+                    {{-- 情報 --}}
+                    <div class="row mb-1">
+                        <div class="col-4 text-muted small">商品名</div>
+                        <div class="col-8">{{ $item->name }}</div>
+                    </div>
+
+                    <div class="row mb-1">
+                        <div class="col-4 text-muted small">分類</div>
+                        <div class="col-8">{{ $item->type }}</div>
+                    </div>
+
+                    <div class="row mb-1">
+                        <div class="col-4 text-muted small">価格</div>
+                        <div class="col-8">
+                            {{ number_format($item->price) }} 円
+                        </div>
+                    </div>
+
+                    <div class="row mb-1">
+                        <div class="col-4 text-muted small">在庫</div>
+                        <div class="col-8">{{ $item->stock }}</div>
+                    </div>
+
+                    <div class="row mb-1">
+                        <div class="col-4 text-muted small">保管</div>
+                        <div class="col-8">{{ $item->storage }}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4 text-muted small">備考</div>
+                        <div class="col-8">
+                            {{ $item->description ?? '―' }}
+                        </div>
+                    </div>
+
+                </div>
             </div>
+
+            {{-- レビュー --}}
+            <div class="card shadow-sm">
+                <div class="card-body p-3">
+
+                    <div class="text-muted small mb-2 text-center">
+                        レビュー
+                    </div>
+
+                    @forelse ($item->reviews as $review)
+                    <div class="small border-bottom pb-1 mb-1">
+                        ★ {{ $review->rating }}
+                        （{{ $review->user->name ?? '匿名' }}）
+                        <br>
+                        {{ $review->review }}
+                    </div>
+                    @empty
+                    <div class="text-muted small text-center">
+                        まだありません
+                    </div>
+                    @endforelse
+
+                </div>
+            </div>
+
         </div>
-
-        <h3>レビュー一覧</h3>
-
-        @forelse ($item->reviews as $review)
-        <div class="review">
-            ★ {{ $review->rating }}
-            （{{ $review->user->name ?? '匿名' }}）<br>
-            {{ $review->review }}
-        </div>
-        @empty
-        <p>レビューはまだありません</p>
-        @endforelse
-
-        <p>
-            <a href="{{ route('items.reviews.index', $item->id) }}" class="btn">
-                レビューを書く
-            </a>
-        </p>
-
     </div>
-</body>
 
-</html>
+</div>
+@endsection
