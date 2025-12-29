@@ -1,0 +1,81 @@
+// _common.scss
+body {
+    background: linear-gradient(135deg, #f4f7fb 0%, #eef3f9 40%, #ffffff 100%);
+}
+
+.app-card {
+    border-radius: 12px;
+    background: linear-gradient(180deg, #ffffff, #f7faff);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.page-title {
+    font-size: 2.1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding-left: 12px;
+    margin-bottom: 2rem;
+    border-left: 5px solid #0d6efd;
+    color: #333;
+}
+
+.select-with-arrow {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg ... />");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 12px 8px;
+    padding-right: 40px;
+}
+
+$primary-color: #0d6efd;
+$primary-hover: #6ea8fe;
+
+/* ===============================
+    社員情報編集画面 専用調整
+   =============================== */
+.edit-card {
+    padding: 2.5rem;   
+}
+
+/* 各入力ブロックの間隔を統一 */
+.edit-card .mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+/* ラベルと入力欄の距離 */
+.edit-card .form-label {
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+}
+
+/* 入力欄の見た目を一覧画面と合わせる */
+.edit-card .form-control,
+.edit-card select {
+    font-size: 0.95rem;
+    padding: 0.6rem 0.75rem;
+}
+
+/* ボタンエリアに余白を追加 */
+.edit-card .d-flex {
+    margin-top: 2rem;
+}
+/* main直下の不要な枠線を消す */
+main.container,
+main.container > * {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* 編集画面 → 一覧のアクションボタン（更新・一覧に戻る） */
+.btn-edit-action {
+    padding: 0.35rem 0.7rem;   
+    font-size: 0.85rem;
+    line-height: 1.2;
+}
+
+
