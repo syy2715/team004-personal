@@ -1,14 +1,25 @@
-// _common.scss
+/* ===============================
+    ベース（全画面共通）
+=============================== */
+
 body {
     background: linear-gradient(135deg, #f4f7fb 0%, #eef3f9 40%, #ffffff 100%);
 }
 
+/* ===============================
+    共通カード UI
+=============================== */
+
 .app-card {
-    border-radius: 12px;
+    border-radius: 16px;
     background: linear-gradient(180deg, #ffffff, #f7faff);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
     overflow: hidden;
 }
+
+/* ===============================
+    ページタイトル
+=============================== */
 
 .page-title {
     font-size: 2.1rem;
@@ -19,6 +30,10 @@ body {
     border-left: 5px solid #0d6efd;
     color: #333;
 }
+
+/* ===============================
+    編集画面（フォーム系）
+=============================== */
 
 .select-with-arrow {
     appearance: none;
@@ -34,36 +49,84 @@ body {
 $primary-color: #0d6efd;
 $primary-hover: #6ea8fe;
 
-/* ===============================
-    社員情報編集画面 専用調整
-   =============================== */
 .edit-card {
     padding: 2.5rem;   
 }
 
-/* 各入力ブロックの間隔を統一 */
 .edit-card .mb-4 {
     margin-bottom: 1.5rem !important;
 }
 
-/* ラベルと入力欄の距離 */
 .edit-card .form-label {
     margin-bottom: 0.4rem;
     font-size: 0.95rem;
 }
 
-/* 入力欄の見た目を一覧画面と合わせる */
 .edit-card .form-control,
 .edit-card select {
     font-size: 0.95rem;
     padding: 0.6rem 0.75rem;
 }
 
-/* ボタンエリアに余白を追加 */
 .edit-card .d-flex {
     margin-top: 2rem;
 }
-/* main直下の不要な枠線を消す */
+
+/* ===============================
+    共通：テーブルラッパー
+=============================== */
+
+.app-table-wrapper {
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* ===============================
+    共通：フォーム用テーブル
+=============================== */
+
+.app-form-table {
+    margin-bottom: 0;
+}
+
+.app-form-table th {
+    width: 30%;
+    background-color: #f4f8ff;
+    font-weight: 600;
+    color: #555;
+}
+
+.app-form-table td {
+    padding: 0.75rem 1rem;
+}
+
+.app-form-table input,
+.app-form-table select {
+    max-width: 420px;   /* 入力幅を抑える */
+}
+
+/* ===============================
+    共通：管理画面フォーム幅
+=============================== */
+
+.form-compact {
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-compact .form-control,
+.form-compact .form-select {
+    font-size: 0.95rem;
+    padding: 0.45rem 0.6rem;
+}
+
+/* ===============================
+    その他微調整
+=============================== */
+
 main.container,
 main.container > * {
     border: none !important;
@@ -77,5 +140,3 @@ main.container > * {
     font-size: 0.85rem;
     line-height: 1.2;
 }
-
-

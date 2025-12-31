@@ -1,4 +1,5 @@
-{{-- resources/views/components/page-title.blade.php --}}
-<h1 class="page-title">
+{{-- 共通ページタイトルコンポーネント --}}
+<h1 {{ $attributes->merge(['class' => 'page-title']) }}>
     {{ $slot }}
 </h1>
+

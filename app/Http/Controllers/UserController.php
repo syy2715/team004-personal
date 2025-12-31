@@ -43,7 +43,11 @@ class UserController extends Controller
             'role' => 'required|integer',
             'group_id' => 'required|integer',
             'sales_office' => 'required',
-        ]);
+            // ▼【提案】社員一覧・編集画面とバリデーションを統一する案
+            // OKであればコメント解除して利用してください
+            'age' => ['nullable', 'integer', 'min:0', 'max:120'],
+
+            ]);
 
         $user = User::create([
             'name' => $request->name,

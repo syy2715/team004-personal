@@ -1,139 +1,122 @@
 @extends('layouts.app')
 
-@section('title', '社員編集')
-
 @section('content')
-<div class="container py-4">
+<div class="container py-5">
 
-    <div class="row justify-content-center">
-        <div class="col-md-5 col-lg-4">
+    <h1 class="page-title mb-4">社員情報編集</h1>
 
-            <div class="card shadow-sm">
-                <div class="card-header text-center">
-                    <h5 class="mb-0">社員編集</h5>
-                </div>
+    <x-app-card>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('users.update', $user->id) }}">
-                        @csrf
-                        @method('PUT')
+        <form action="{{ route('users.update', $user->id) }}"
+            method="POST"
+            class="form-compact">
 
-                        <div class="mb-3">
-                            <label class="form-label">名前</label>
-                            <input
-                                type="text"
-                                name="name"
-                                class="form-control"
-                                value="{{ old('name', $user->name) }}">
-                        </div>
+            @csrf
+            @method('PUT')
 
-                        <div class="mb-3">
-                            <label class="form-label">年齢</label>
-                            <input
-                                type="number"
-                                name="age"
-                                class="form-control"
-                                min="0"
-                                max="120"
-                                value="{{ old('age', $user->age) }}">
-                        </div>
+            <div class="app-table-wrapper">
 
-                        <div class="mb-3">
-                            <label class="form-label">メールアドレス</label>
-                            <input
-                                type="email"
-                                name="email"
-                                class="form-control"
-                                value="{{ old('email', $user->email) }}">
-                        </div>
+                <table class="table mb-0 align-middle">
+                    <tbody>
 
-                        <div class="mb-3">
-                            <label class="form-label">電話番号</label>
-                            <input
-                                type="text"
-                                name="phone"
-                                class="form-control"
-                                value="{{ old('phone', $user->phone) }}">
-                        </div>
+                        <tr>
+                            <th class="text-start ps-4">名前</th>
+                            <td>
+                                <input type="text"
+                                    name="name"
+                                    value="{{ old('name', $user->name) }}"
+                                    class="form-control">
+                            </td>
+                        </tr>
 
-                        <div class="mb-3">
-                            <label class="form-label">所属課</label>
-                            <select name="group_id" class="form-select">
-                                <option value="">選択してください</option>
-                                @foreach(\App\Models\User::GROUPS as $key => $label)
-                                    <option value="{{ $key }}"
-                                        {{ old('group_id', $user->group_id) == $key ? 'selected' : '' }}>
-                                        {{ $label }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <tr>
+                            <th class="text-start ps-4">年齢</th>
+                            <td>
+                                <input type="number"
+                                    name="age"
+                                    value="{{ old('age', $user->age) }}"
+                                    class="form-control"
+                                    min="0"
+                                    step="1"
+                                    inputmode="numeric">
+                            </td>
+                        </tr>
 
-                        <div class="mb-3">
-                            <label class="form-label">役職</label>
-                            <select name="role" class="form-select">
-                                <option value="">選択してください</option>
-                                @foreach(\App\Models\User::ROLES as $key => $label)
-                                    <option value="{{ $key }}"
-                                        {{ old('role', $user->role) == $key ? 'selected' : '' }}>
-                                        {{ $label }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <tr>
+                            <th class="text-start ps-4">所属課</th>
+                            <td>
+                                <input type="text"
+                                    name="group_name"
+                                    value="{{ old('group_name', $user->group_name) }}"
+                                    class="form-control">
+                            </td>
+                        </tr>
 
-                        <div class="mb-3">
-                            <label class="form-label">営業所</label>
-                            <select name="sales_office" class="form-select">
-                                <option value="">選択してください</option>
-                                @foreach(\App\Models\User::SALES_OFFICES as $key => $label)
-                                    <option value="{{ $key }}"
-                                        {{ old('sales_office', $user->sales_office) == $key ? 'selected' : '' }}>
-                                        {{ $label }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <tr>
+                            <th class="text-start ps-4">役職</th>
+                            <td>
+                                <select name="role" class="form-select">
+                                    @foreach (\App\Models\User::ROLES as $key => $label)
+                                        <option value="{{ $key }}"
+                                            @selected(old('role', $user->role) == $key)>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
 
-                        <div class="mb-4">
-                            <label class="form-label">
-                                パスワード
-                                <span class="text-muted small">（変更する場合のみ）</span>
-                            </label>
-                            <input
-                                type="password"
-                                name="password"
-                                class="form-control">
-                        </div>
+                        <tr>
+                            <th class="text-start ps-4">営業所</th>
+                            <td>
+                                <select name="sales_office" class="form-select">
+                                    @foreach (\App\Models\User::SALES_OFFICES as $key => $label)
+                                        <option value="{{ $key }}"
+                                            @selected(old('sales_office', $user->sales_office) == $key)>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
 
-                        <div class="d-flex justify-content-between gap-2">
-                            <a href="{{ route('users.index') }}"
-                                class="btn btn-outline-secondary w-50">
-                                一覧へ戻る
-                            </a>
+                        <tr>
+                            <th class="text-start ps-4">メール</th>
+                            <td>
+                                <input type="email"
+                                    name="email"
+                                    value="{{ old('email', $user->email) }}"
+                                    class="form-control">
+                            </td>
+                        </tr>
 
-                            <button type="submit"
-                                class="btn btn-primary w-50">
-                                更新
-                            </button>
-                        </div>
-                    </form>
+                        <tr>
+                            <th class="text-start ps-4">電話番号</th>
+                            <td>
+                                <input type="text"
+                                    name="phone"
+                                    value="{{ old('phone', $user->phone) }}"
+                                    class="form-control">
+                            </td>
+                        </tr>
 
-                    {{-- バリデーションエラー --}}
-                    @if ($errors->any())
-                    <div class="alert alert-danger mt-4 mb-0">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-                </div>
+                    </tbody>
+                </table>
+
             </div>
 
-        </div>
-    </div>
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <a href="{{ route('users.index') }}" class="btn btn-outline-secondary">
+                    戻る
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    更新
+                </button>
+            </div>
+
+        </form>
+
+    </x-app-card>
 
 </div>
 @endsection

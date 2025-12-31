@@ -1,32 +1,31 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-/* ===== 共通背景 ===== */
+// チーム共通CSS
+@import 'common';
+
+/* ===== チーム用 CSS ===== */
 body {
     background: linear-gradient(135deg, #eef5ff, #ffffff);
     font-family: 'Nunito', sans-serif;
 }
 
-/* ===== 画面共通コンテナ ===== */
 .page-container {
     padding-top: 3rem;
     padding-bottom: 3rem;
 }
 
-/* ===== 共通カード ===== */
 .app-card {
     border-radius: 16px;
     background: linear-gradient(180deg, #ffffff, #f7faff);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
-/* ===== 見出し ===== */
 .page-title {
     font-weight: 700;
     color: #2c6ed5;
 }
 
-/* ===== テーブル ===== */
 .table thead {
     background-color: #eaf2ff;
 }
@@ -35,7 +34,6 @@ body {
     background-color: #f3f8ff;
 }
 
-/* ===== ボタン微調整 ===== */
 .btn-outline-primary {
     border-color: #6ea8fe;
     color: #2c6ed5;
