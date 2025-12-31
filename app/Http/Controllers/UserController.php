@@ -45,7 +45,7 @@ class UserController extends Controller
             'sales_office' => 'required',
             // ▼【提案】社員一覧・編集画面とバリデーションを統一する案
             // OKであればコメント解除して利用してください
-            // 'age' => ['nullable', 'integer', 'min:0', 'max:120'],
+            'age' => ['nullable', 'integer', 'min:0', 'max:120'],
 
             ]);
 
