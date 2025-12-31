@@ -1,5 +1,4 @@
-<div {{ $attributes->merge(['class' => 'card app-card', 'style' => 'border: none;']) }}>
-    <div class="card-body p-3">
-        {{ $slot }}
-    </div>
+{{-- 共通カードコンポーネント --}}
+<div {{ $attributes->merge(['class' => 'app-card']) }}>
+    {{ $slot }}
 </div>
