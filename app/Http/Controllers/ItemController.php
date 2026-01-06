@@ -29,7 +29,8 @@ class ItemController extends Controller
             'description' => 'nullable',
         ]);
         if ($request->hasFile('image_path')) {
-            $path = $request->file('image_path')->store('items', 'public');
+            // 第2引数を 'public' から env('FILESYSTEM_DISK', 'public') に変更
+            $path = $request->file('image_path')->store('items', env('FILESYSTEM_DISK', 'public'));
             $validated['image_path'] = $path;
         }
 
@@ -107,7 +108,8 @@ class ItemController extends Controller
 
         // 画像がアップロードされた時だけ更新
         if ($request->hasFile('image_path')) {
-            $path = $request->file('image_path')->store('items', 'public');
+            // こちらも同様に変更
+            $path = $request->file('image_path')->store('items', env('FILESYSTEM_DISK', 'public'));
             $item->image_path = $path;
             $item->save();
         }
