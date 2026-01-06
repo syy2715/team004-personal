@@ -18,7 +18,7 @@
                     {{-- 画像 --}}
                     @if ($item->image_path)
                     <div class="text-center mb-2">
-                        <img src="{{ asset('storage/' . $item->image_path) }}"
+                        <img src="{{ Storage::disk(config('filesystems.default'))->url($item->image_path) }}">
                             class="img-fluid rounded"
                             style="max-height: 120px;">
                     </div>
