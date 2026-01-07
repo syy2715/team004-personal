@@ -40,7 +40,13 @@ return "<a href='{$url}'>{$label} {$arrow}</a>";
         <tr>
             <td>{{ $item->id }}</td>
             <td>
-                <img src="{{ Storage::disk(config('filesystems.default'))->url($item->image_path) }}" height="40">
+                @if(!empty($item->image_path))
+                <img
+                    src="{{ Storage::disk(config('filesystems.default'))->url($item->image_path) }}"
+                    height="40">
+                @else
+                <span class="text-muted small">画像なし</span>
+                @endif
             </td>
             <td>
                 <a href="{{ route('items.show', $item->id) }}">
