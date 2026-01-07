@@ -29,5 +29,8 @@ class ItemsSeeder extends Seeder
 
         fclose($file);
 
+        DB::table('items')->insert($chunk);
+
+
     }
 }
