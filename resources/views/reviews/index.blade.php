@@ -22,7 +22,7 @@
 
             <div class="card-body d-flex gap-4 align-items-start">
                 @if ($item->image_path)
-                <img src="{{ asset('storage/' . $item->image_path) }}"
+                <img src="{{ Storage::disk(config('filesystems.default'))->url($item->image_path) }}"
                     height="120"
                     class="rounded">
                 @endif

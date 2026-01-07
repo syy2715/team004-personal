@@ -32,7 +32,7 @@
 
                     <div class="row mb-1">
                         <div class="col-4 text-muted small">分類</div>
-                        <div class="col-8">{{ $item->type }}</div>
+                        <div class="col-8">{{ $item->type_label }}</div>
                     </div>
 
                     <div class="row mb-1">
@@ -49,7 +49,7 @@
 
                     <div class="row mb-1">
                         <div class="col-4 text-muted small">保管</div>
-                        <div class="col-8">{{ $item->storage }}</div>
+                        <div class="col-8">{{ $item->storage_label }}</div>
                     </div>
 
                     <div class="row">

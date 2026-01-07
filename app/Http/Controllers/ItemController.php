@@ -64,7 +64,8 @@ class ItemController extends Controller
         $items = Item::withAvg('reviews', 'rating')
             ->withCount('reviews')
             ->orderBy($sort, $direction)
-            ->get();
+            ->paginate(50)
+            ->appends($request->query());
 
         return view('items.index', compact('items', 'sort', 'direction'));
     }
