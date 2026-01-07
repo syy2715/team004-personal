@@ -93,4 +93,10 @@ class User extends Authenticatable
     {
         return self::GROUPS[$this->group_id] ?? '未設定';
     }
+
+    public function isAdmin(): bool
+    {
+    return $this->role === 1;
+    }
+    
 }

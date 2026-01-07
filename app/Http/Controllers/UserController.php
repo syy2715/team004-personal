@@ -9,20 +9,38 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    // 一覧
     public function index()
-    {
-        $users = User::all();
-        return view('users.index', compact('users'));
+{
+    // 未ログインはログイン画面へ
+    if (!auth()->check()) {
+        return redirect()->route('login');
     }
 
+    // 管理者以外は403
+    if (!auth()->user()->isAdmin()) {
+        abort(403, '権限がありません');
+    }
+
+    $users = User::all();
+    return view('users.index', compact('users'));
+}
+
+    // 一覧
+    //public function index()
+    //{
+    //    $users = User::all();
+    //    return view('users.index', compact('users'));
+   // }
+
     // 新規登録画面
+
+
     public function create()
     {
-        // 所属課（Userモデルの定数を使用）
+         //所属課（Userモデルの定数を使用）
         $groups = User::GROUPS;
 
-        // 役職
+         //役職
         $roles = [
             'admin'    => '管理者',
             'manager' => '上長',
@@ -30,7 +48,7 @@ class UserController extends Controller
         ];
 
         return view('users.create', compact('groups', 'roles'));
-    }
+    }   
 
     // 登録処理
 

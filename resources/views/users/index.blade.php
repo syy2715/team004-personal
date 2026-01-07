@@ -8,6 +8,10 @@
         <h1 class="page-title">社員一覧</h1>
     </div>
 
+    @if(auth()->check() && auth()->user()->isAdmin())
+    <a href="{{ route('users.index') }}">社員一覧</a>
+    @endif
+
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
