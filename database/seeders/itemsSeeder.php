@@ -5,11 +5,11 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ProductsSeeder extends Seeder
+class ItemsSeeder extends Seeder
 {
     public function run(): void
     {
-        $path = database_path('seeders/data/products.csv');
+        $path = database_path('seeders/data/Items.csv');
 
         $file = fopen($path, 'r');
         $header = fgetcsv($file); // ヘッダ行
@@ -29,9 +29,5 @@ class ProductsSeeder extends Seeder
 
         fclose($file);
 
-        // 大量対策：500件ずつ
-        foreach (array_chunk($rows, 500) as $chunk) {
-            DB::table('products')->insert($chunk);
-        }
     }
 }
