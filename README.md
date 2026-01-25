@@ -16,8 +16,8 @@
 - 商品レビュー画面
 
 ## 開発環境
-PHP 8.2.12
-MySQL互換（MariaDB 10.4.32）
+PHP 8.2.12<br>
+MySQL互換（MariaDB 10.4.32）<br>
 Laravel 10.50.0
 
 ## システム閲覧
