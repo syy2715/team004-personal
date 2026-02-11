@@ -16,12 +16,11 @@
                 <div class="card-body p-3">
 
                     {{-- 画像 --}}
+
                     @if ($item->image_path)
-                    <div class="text-center mb-2">
-                        <img src="{{ Storage::disk(config('filesystems.default'))->url($item->image_path) }}"
-                            class="img-fluid rounded"
-                            style="max-height: 120px;">
-                    </div>
+                        <img src="{{ $item->image_path }}"
+                        height="120"
+                        class="rounded">
                     @endif
 
                     {{-- 情報 --}}

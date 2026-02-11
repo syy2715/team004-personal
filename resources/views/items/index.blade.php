@@ -51,9 +51,10 @@ return "<a href='{$url}'>{$label} {$arrow}</a>";
             <td>{{ $item->id }}</td>
 
             <td>
+
                 @if (!empty($item->image_path))
                 <img
-                    src="{{ Storage::disk(config('filesystems.default'))->url($item->image_path) }}"
+                    src="{{ $item->image_path }}"
                     height="40">
                 @else
                 <span class="text-muted small">画像なし</span>
